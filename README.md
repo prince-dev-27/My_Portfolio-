@@ -60,7 +60,6 @@ Seed the initial portfolio data and admin account:
 ```bash
 npm run seed
 ```
-*(Default seed admin credentials: username: `prince`, password: `admin123`)*
 
 Start the backend development server:
 ```bash
