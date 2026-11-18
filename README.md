@@ -86,10 +86,6 @@ npm run dev
 
 ## 🔒 Admin Dashboard Features
 
-Click on the **Admin Login** button in the top navigation and log in with:
-- **Username:** `prince`
-- **Password:** `admin123`
-
 The Admin Dashboard provides full CRUD capabilities to:
 1. **Manage Projects:** Add, update, or remove portfolio projects with categories, tech stacks, and live links.
 2. **Manage Skills:** Add, update, or remove technical skills and proficiency percentages.
