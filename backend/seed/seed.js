@@ -1,3 +1,5 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -24,14 +26,19 @@ const seedData = async () => {
     await Message.deleteMany({});
 
     // Seed Admin
-    const hashedPassword = await bcrypt.hash('admin123', 10);
+    const seedUsername = process.env.SEED_ADMIN_USERNAME || 'prince';
+    const seedPassword = process.env.SEED_ADMIN_PASSWORD || 'Admin@LocalDev2026!';
+    const seedName = process.env.SEED_ADMIN_NAME || 'Prince Undaviya';
+    const seedEmail = process.env.SEED_ADMIN_EMAIL || 'prince@undaviya.dev';
+
+    const hashedPassword = await bcrypt.hash(seedPassword, 10);
     await Admin.create({
-      username: 'prince',
+      username: seedUsername,
       password: hashedPassword,
-      name: 'Prince Undaviya',
-      email: 'prince@undaviya.dev'
+      name: seedName,
+      email: seedEmail
     });
-    console.log('Admin seeded (username: prince, password: admin123)');
+    console.log(`Admin seeded (username: ${seedUsername})`);
 
     // Seed Projects
     await Project.insertMany([

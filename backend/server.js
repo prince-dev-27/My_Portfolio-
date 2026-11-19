@@ -1,15 +1,33 @@
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+
+// Load environment variables (supports running from backend dir or repo root)
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+require('dotenv').config(); // Fallback for root .env if present
+
+// Environment & Security Validation
+if (!process.env.JWT_SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('FATAL SECURITY ERROR: JWT_SECRET environment variable is missing in production!');
+    process.exit(1);
+  } else {
+    console.warn('WARNING: JWT_SECRET environment variable is not defined. Ensure .env is properly configured.');
+  }
+}
 
 const app = express();
 
-// Middleware
+// Parse CORS allowed origins (supports single or comma-separated URLs in CLIENT_URL)
+const configuredOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',').map((url) => url.trim())
+  : [];
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  process.env.CLIENT_URL
+  ...configuredOrigins
 ].filter(Boolean);
 
 app.use(cors({

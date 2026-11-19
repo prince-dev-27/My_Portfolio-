@@ -7,7 +7,13 @@ const auth = (req, res, next) => {
       return res.status(401).json({ success: false, message: 'No authentication token, authorization denied' });
     }
 
-    const verified = jwt.verify(token, process.env.JWT_SECRET || 'prince_portfolio_super_secret_key_2026');
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      console.error('CRITICAL: JWT_SECRET environment variable is not defined.');
+      return res.status(500).json({ success: false, message: 'Server authentication configuration error' });
+    }
+
+    const verified = jwt.verify(token, jwtSecret);
     req.admin = verified;
     next();
   } catch (err) {

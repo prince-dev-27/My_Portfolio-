@@ -22,10 +22,17 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid credentials' });
     }
 
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      console.error('CRITICAL: JWT_SECRET environment variable is not defined.');
+      return res.status(500).json({ success: false, message: 'Server authentication configuration error' });
+    }
+
+    const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
     const token = jwt.sign(
       { id: admin._id, username: admin.username },
-      process.env.JWT_SECRET || 'prince_portfolio_super_secret_key_2026',
-      { expiresIn: '7d' }
+      jwtSecret,
+      { expiresIn }
     );
 
     res.json({
