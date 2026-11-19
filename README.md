@@ -41,15 +41,50 @@ A professional, modern, fully functional Full Stack Developer Portfolio and Admi
 
 ## 🚀 Local Development Instructions
 
-The application runs using separate backend and frontend development servers.
+The application runs using separate backend and frontend development servers with dedicated environment configuration.
 
 ### Prerequisites
 - **Node.js** (v18+ recommended)
-- **MongoDB** running locally (`mongodb://127.0.0.1:27017`) or connection URI in `.env`.
+- **MongoDB** running locally (`mongodb://127.0.0.1:27017`) or a MongoDB Atlas connection URI.
 
-### 1. Backend Setup & Seeding
+---
 
-Open a terminal and navigate to the backend directory:
+### 1. Environment Setup (Crucial & Secure)
+
+Both frontend and backend rely on environment files. Templates (`.env.example`) are version-controlled, while your private `.env` files are strictly excluded via `.gitignore`.
+
+#### Backend Environment Setup:
+1. Navigate to `backend/` and copy the example template:
+   ```bash
+   cd backend
+   cp .env.example .env   # Or 'copy .env.example .env' in Windows CMD
+   ```
+2. Verify or customize variables in `backend/.env`:
+   - `PORT`: Default `5000`
+   - `NODE_ENV`: `development` (set to `production` in production environments)
+   - `MONGO_URI`: `mongodb://127.0.0.1:27017/prince-portfolio`
+   - `JWT_SECRET`: A secure 256-bit cryptographically random key. (Generate a new one with: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`)
+   - `JWT_EXPIRES_IN`: Token validity period (e.g. `7d`)
+   - `CLIENT_URL`: Allowed frontend origin(s), e.g. `http://localhost:3000,http://localhost:5173`
+   - `SEED_ADMIN_*`: Credentials used during `npm run seed`.
+
+#### Frontend Environment Setup:
+1. Navigate to `frontend/` and copy the example template:
+   ```bash
+   cd frontend
+   cp .env.example .env   # Or 'copy .env.example .env' in Windows CMD
+   ```
+2. In `frontend/.env`:
+   - `VITE_API_URL`: `http://localhost:5000/api` (or `/api` to use Vite's dev proxy)
+   - `VITE_APP_TITLE`: Portfolio title
+   - `VITE_APP_URL`: `http://localhost:3000`
+   - `VITE_CONTACT_EMAIL`: `prince@undaviya.dev`
+
+---
+
+### 2. Backend Setup & Seeding
+
+In the `backend` directory:
 
 ```bash
 cd backend
@@ -67,9 +102,11 @@ npm run dev
 # Server runs on http://localhost:5000
 ```
 
-### 2. Frontend Setup
+---
 
-Open a second terminal and navigate to the frontend directory:
+### 3. Frontend Setup
+
+In the `frontend` directory:
 
 ```bash
 cd frontend

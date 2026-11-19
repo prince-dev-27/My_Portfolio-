@@ -21,7 +21,7 @@ const app = express();
 
 // Parse CORS allowed origins (supports single or comma-separated URLs in CLIENT_URL)
 const configuredOrigins = process.env.CLIENT_URL
-  ? process.env.CLIENT_URL.split(',').map((url) => url.trim())
+  ? process.env.CLIENT_URL.split(',').map((url) => url.trim().replace(/\/$/, ''))
   : [];
 
 const allowedOrigins = [
@@ -32,21 +32,59 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+    if (!origin) return callback(null, true);
+    const cleanOrigin = origin.replace(/\/$/, '');
+    if (allowedOrigins.includes(cleanOrigin) || process.env.NODE_ENV !== 'production') {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error(`Not allowed by CORS: ${origin}`));
     }
   },
   credentials: true
 }));
 app.use(express.json());
 
-// Connect MongoDB
+// MongoDB connection with serverless connection reuse & pooling
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/prince-portfolio';
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch(err => console.error('MongoDB connection error:', err));
+
+let cachedConnection = null;
+
+const connectDB = async () => {
+  if (cachedConnection && mongoose.connection.readyState === 1) {
+    return cachedConnection;
+  }
+  try {
+    cachedConnection = await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+    });
+    return cachedConnection;
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    throw err;
+  }
+};
+
+// Initial connection for local development
+if (require.main === module) {
+  connectDB()
+    .then(() => console.log('MongoDB connected successfully'))
+    .catch(err => console.error('MongoDB connection error:', err));
+}
+
+// Middleware to ensure DB connection is ready before handling API routes in serverless environments
+app.use(async (req, res, next) => {
+  if (req.path === '/') return next();
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: 'Database connection failed. Verify MONGO_URI and MongoDB Atlas Network Access (0.0.0.0/0).',
+      error: process.env.NODE_ENV === 'production' ? undefined : err.message
+    });
+  }
+});
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));
