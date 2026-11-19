@@ -45,7 +45,7 @@ app.use(cors({
 app.use(express.json());
 
 // MongoDB connection with serverless connection reuse & pooling
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/prince-portfolio';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://undaviyaprince27_db_user:princeundaviya@ac-bkzdycn-shard-00-00.zmq8sva.mongodb.net:27017,ac-bkzdycn-shard-00-01.zmq8sva.mongodb.net:27017,ac-bkzdycn-shard-00-02.zmq8sva.mongodb.net:27017/prince-portfolio?replicaSet=atlas-dhpfbt-shard-0&ssl=true&authSource=admin';
 
 let cachedConnection = null;
 
