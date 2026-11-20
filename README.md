@@ -78,7 +78,7 @@ Both frontend and backend rely on environment files. Templates (`.env.example`) 
    - `VITE_API_URL`: `http://localhost:5000/api` (or `/api` to use Vite's dev proxy)
    - `VITE_APP_TITLE`: Portfolio title
    - `VITE_APP_URL`: `http://localhost:3000`
-   - `VITE_CONTACT_EMAIL`: `prince@undaviya.dev`
+   - `VITE_CONTACT_EMAIL`: `princeundaviya@gmail.com`
 
 ---
 

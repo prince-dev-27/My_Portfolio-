@@ -13,10 +13,7 @@ const getNormalizedBaseURL = (url) => {
 };
 
 const API = axios.create({
-  baseURL: getNormalizedBaseURL(rawBaseURL),
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  baseURL: getNormalizedBaseURL(rawBaseURL)
 });
 
 // Add auth token to requests if available

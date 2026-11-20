@@ -29,7 +29,7 @@ const seedData = async () => {
     const seedUsername = process.env.SEED_ADMIN_USERNAME || 'prince';
     const seedPassword = process.env.SEED_ADMIN_PASSWORD || 'Admin@LocalDev2026!';
     const seedName = process.env.SEED_ADMIN_NAME || 'Prince Undaviya';
-    const seedEmail = process.env.SEED_ADMIN_EMAIL || 'prince@undaviya.dev';
+    const seedEmail = process.env.SEED_ADMIN_EMAIL || 'princeundaviya@gmail.com';
 
     const hashedPassword = await bcrypt.hash(seedPassword, 10);
     await Admin.create({

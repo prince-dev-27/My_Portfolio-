@@ -49,13 +49,13 @@ export default function Hero() {
 
             <div className="pt-8 flex items-center justify-center lg:justify-start gap-6 text-[#94A3B8]">
               <span className="text-xs uppercase tracking-wider font-semibold text-[#94A3B8]">Connect:</span>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-[#111C2F] border border-[#26364D] text-[#F8FAFC] hover:border-[#60A5FA] hover:text-[#2563EB] transition-colors">
+              <a href="https://github.com/Prince-2702" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-[#111C2F] border border-[#26364D] text-[#F8FAFC] hover:border-[#60A5FA] hover:text-[#2563EB] transition-colors">
                 <Github className="w-5 h-5" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-[#111C2F] border border-[#26364D] text-[#F8FAFC] hover:border-[#60A5FA] hover:text-[#2563EB] transition-colors">
+              <a href="https://www.linkedin.com/in/prince-undaviya" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-[#111C2F] border border-[#26364D] text-[#F8FAFC] hover:border-[#60A5FA] hover:text-[#2563EB] transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="mailto:prince@undaviya.dev" className="p-2 rounded-lg bg-[#111C2F] border border-[#26364D] text-[#F8FAFC] hover:border-[#60A5FA] hover:text-[#2563EB] transition-colors">
+              <a href="mailto:princeundaviya@gmail.com" className="p-2 rounded-lg bg-[#111C2F] border border-[#26364D] text-[#F8FAFC] hover:border-[#60A5FA] hover:text-[#2563EB] transition-colors">
                 <Mail className="w-5 h-5" />
               </a>
             </div>

@@ -42,7 +42,8 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 
 // MongoDB connection with serverless connection reuse & pooling
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://undaviyaprince27_db_user:princeundaviya@ac-bkzdycn-shard-00-00.zmq8sva.mongodb.net:27017,ac-bkzdycn-shard-00-01.zmq8sva.mongodb.net:27017,ac-bkzdycn-shard-00-02.zmq8sva.mongodb.net:27017/prince-portfolio?replicaSet=atlas-dhpfbt-shard-0&ssl=true&authSource=admin';
@@ -85,6 +86,12 @@ app.use(async (req, res, next) => {
     });
   }
 });
+
+// Static file serving for local image uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Static uploads directory for local development
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));

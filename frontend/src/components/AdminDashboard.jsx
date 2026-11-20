@@ -33,6 +33,7 @@ export default function AdminDashboard({ admin, initialTab = 'projects', onLogou
   const [modalType, setModalType] = useState(''); // 'project', 'skill', 'experience', 'education'
   const [editItem, setEditItem] = useState(null);
   const [formData, setFormData] = useState({});
+  const [imageFile, setImageFile] = useState(null);
 
   // Profile update state
   const [profileData, setProfileData] = useState({ name: admin?.name || '', email: admin?.email || '', currentPassword: '', newPassword: '' });
@@ -101,6 +102,7 @@ export default function AdminDashboard({ admin, initialTab = 'projects', onLogou
   const handleOpenModal = (type, item = null) => {
     setModalType(type);
     setEditItem(item);
+    setImageFile(null);
     if (item) {
       setFormData(item);
     } else {
@@ -137,8 +139,26 @@ export default function AdminDashboard({ admin, initialTab = 'projects', onLogou
     e.preventDefault();
     try {
       if (modalType === 'project') {
-        if (editItem) await updateProject(editItem._id, formData);
-        else await createProject(formData);
+        const data = new FormData();
+        data.append('title', formData.title || '');
+        data.append('description', formData.description || '');
+        data.append('longDescription', formData.longDescription || '');
+        data.append('category', formData.category || 'Full Stack');
+        data.append('githubUrl', formData.githubUrl || '');
+        data.append('liveUrl', formData.liveUrl || '');
+        data.append('featured', formData.featured || false);
+        data.append('order', formData.order || 0);
+        data.append('technologies', JSON.stringify(formData.technologies || []));
+        if (imageFile) {
+          data.append('image', imageFile);
+        } else if (formData.imageUrl && !formData.imageUrl.startsWith('blob:')) {
+          data.append('imageUrl', formData.imageUrl);
+        } else if (editItem && !imageFile && formData.imageUrl === '') {
+          data.append('imageUrl', '');
+        }
+
+        if (editItem) await updateProject(editItem._id, data);
+        else await createProject(data);
       } else if (modalType === 'skill') {
         if (editItem) await updateSkill(editItem._id, formData);
         else await createSkill(formData);
@@ -630,17 +650,21 @@ export default function AdminDashboard({ admin, initialTab = 'projects', onLogou
                                   alert('File size exceeds 5MB limit.');
                                   return;
                                 }
-                                const reader = new FileReader();
-                                reader.onload = () => {
-                                  setFormData({ ...formData, imageUrl: reader.result });
-                                };
-                                reader.readAsDataURL(file);
+                                if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
+                                  alert('Unsupported file format. Please upload JPG, PNG, or WEBP.');
+                                  return;
+                                }
+                                setImageFile(file);
+                                setFormData({ ...formData, imageUrl: URL.createObjectURL(file) });
                               }}
                             />
                           </label>
                           <button
                             type="button"
-                            onClick={() => setFormData({ ...formData, imageUrl: '' })}
+                            onClick={() => {
+                              setImageFile(null);
+                              setFormData({ ...formData, imageUrl: '' });
+                            }}
                             className="px-3 py-1.5 rounded-lg bg-[#EF4444] text-white text-xs font-semibold hover:bg-red-600"
                           >
                             Remove
@@ -661,11 +685,12 @@ export default function AdminDashboard({ admin, initialTab = 'projects', onLogou
                               alert('File size exceeds 5MB limit.');
                               return;
                             }
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                              setFormData({ ...formData, imageUrl: reader.result });
-                            };
-                            reader.readAsDataURL(file);
+                            if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
+                              alert('Unsupported file format. Please upload JPG, PNG, or WEBP.');
+                              return;
+                            }
+                            setImageFile(file);
+                            setFormData({ ...formData, imageUrl: URL.createObjectURL(file) });
                           }}
                         />
                         <label htmlFor="project-image-upload" className="cursor-pointer space-y-2 block">

@@ -107,7 +107,7 @@ export default function About() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#F8FAFC]">Experience:</span>
-                  <span>3+ Years Professional</span>
+                  <span>Nearly 1 Year</span>
                 </div>
               </div>
             </div>

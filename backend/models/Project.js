@@ -7,6 +7,7 @@ const ProjectSchema = new mongoose.Schema({
   category: { type: String, enum: ['Full Stack', 'Frontend', 'Backend', 'Mobile', 'AI / ML'], default: 'Full Stack' },
   technologies: [{ type: String }],
   imageUrl: { type: String, default: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80' },
+  imagePublicId: { type: String },
   githubUrl: { type: String, default: '#' },
   liveUrl: { type: String, default: '#' },
   featured: { type: Boolean, default: false },

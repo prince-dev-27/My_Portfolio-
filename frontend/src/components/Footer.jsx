@@ -18,7 +18,6 @@ export default function Footer() {
 
           <div className="text-center md:text-right text-xs text-[#94A3B8] space-y-1">
             <p>© {new Date().getFullYear()} Prince Undaviya. All rights reserved.</p>
-            <p>Built locally with React, Node.js, Express, and MongoDB. Zero Gradients Design System.</p>
           </div>
         </div>
       </div>

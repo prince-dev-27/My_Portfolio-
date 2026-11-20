@@ -57,8 +57,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-[#94A3B8] uppercase">Email</div>
-                    <a href="mailto:prince@undaviya.dev" className="text-sm font-medium text-[#F8FAFC] hover:text-[#60A5FA]">
-                      prince@undaviya.dev
+                    <a href="mailto:princeundaviya@gmail.com" className="text-sm font-medium text-[#F8FAFC] hover:text-[#60A5FA]">
+                      princeundaviya@gmail.com
                     </a>
                   </div>
                 </div>
@@ -69,7 +69,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-[#94A3B8] uppercase">Phone</div>
-                    <span className="text-sm font-medium text-[#F8FAFC]">+91 98765 43210</span>
+                    <span className="text-sm font-medium text-[#F8FAFC]">+91 96388 40520</span>
                   </div>
                 </div>
 
@@ -79,7 +79,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-[#94A3B8] uppercase">Location</div>
-                    <span className="text-sm font-medium text-[#F8FAFC]">Ahmedabad, Gujarat, India</span>
+                    <span className="text-sm font-medium text-[#F8FAFC]">Surat, Gujarat, India</span>
                   </div>
                 </div>
               </div>
